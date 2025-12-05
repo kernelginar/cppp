@@ -14,14 +14,14 @@ make
 Usage: cppp [OPTIONS]
 
 Options:
-  -m, --mode           Specify the operation mode. (required)
-  -i, --input          Source file or directory path. (optional)
-  -o, --output         Destination file or directory path. (optional)
+  -m, --mode           Specify the operation mode. (optional, default copy)
+  -i, --input <path>   Source file or directory path. (optional)
+  -o, --output <path>  Destination file or directory path. (optional)
   -p, --parts          Specify the number of parts for copying.
-      --insert-after   Insert data after the specified position.
-      --select         Select specific parts for "select-merge" mode.
-  -c, --disable-sha256 Disable verifying SHA-256 checksum after copying.
+  -c, --check-sha256   Enable verifying SHA-256 checksum after copying.
   -h, --help           Display this help message.
+  -v, --verbose        Enable verbose logging.
+  -f, --force          Enable overwriting on existing file.
   -V, --version        Show program version information.
 ```
 
