@@ -74,13 +74,30 @@ ErrorCode init_process(parser_options cli_options) {
 						print_success("'%s' copied to '%s'", src_info.file_name, dst_info.file_name);
 					}
 				} else if (dst_info.status == -1) {
-					ErrorCode status = copy(src_info.file_name, dst_info.file_name, cli_options.num_parts, cli_options);
-					if (status == ERR_COPY_FILE_FULL_FAIL) {
-						print_failure("ERR_COPY_FILE_FULL_FAIL: '%s' couldn't be copied", src_info.file_name);
-					} else if (status == ERR_COPY_FILE_PART_COPY) {
-						print_failure("ERR_COPY_FILE_PART_COPY: '%s' couldn't be copied", src_info.file_name);
-					} else if (status == ERR_OK) {
-						print_success("'%s' copied to '%s'", src_info.file_name, dst_info.file_name);
+					if (fileCount > 0 && directoryCount == 0) {
+						char output[PATH_MAX];
+						snprintf(output, sizeof(output), "%s/%s", dst_info.file_name, get_only_file_name(src_info.file_name));
+						mkdir_p(dst_info.file_name, src_info.dir_permissions);
+						ErrorCode status = copy(src_info.file_name, output, cli_options.num_parts, cli_options);
+						if (status == ERR_COPY_FILE_FULL_FAIL) {
+							print_failure("ERR_COPY_FILE_FULL_FAIL: '%s' couldn't be copied", src_info.file_name);
+						} else if (status == ERR_COPY_FILE_PART_COPY) {
+							print_failure("ERR_COPY_FILE_PART_COPY: '%s' couldn't be copied", src_info.file_name);
+						} else if (status == ERR_OK) {
+							print_success("'%s' copied to '%s'", src_info.file_name, dst_info.file_name);
+						}
+					} else if (fileCount > 0 && directoryCount > 0) {
+						char output[PATH_MAX];
+						snprintf(output, sizeof(output), "%s/%s", dst_info.file_name, get_only_file_name(src_info.file_name));
+						mkdir_p(dst_info.file_name, src_info.dir_permissions);
+						ErrorCode status = copy(src_info.file_name, output, cli_options.num_parts, cli_options);
+						if (status == ERR_COPY_FILE_FULL_FAIL) {
+							print_failure("ERR_COPY_FILE_FULL_FAIL: '%s' couldn't be copied", src_info.file_name);
+						} else if (status == ERR_COPY_FILE_PART_COPY) {
+							print_failure("ERR_COPY_FILE_PART_COPY: '%s' couldn't be copied", src_info.file_name);
+						} else if (status == ERR_OK) {
+							print_success("'%s' copied to '%s'", src_info.file_name, dst_info.file_name);
+						}
 					}
 				} else if (dst_info.status == 0) {
 					if (cli_options.overwrite) {
@@ -94,6 +111,8 @@ ErrorCode init_process(parser_options cli_options) {
 						}
 					} else {
 						print_err("ERR_COPY_FILE_NOT_ALLOWED: no overwrite permission");
+						print_err("src: %s", src_info.file_name);
+						print_err("dst: %s", dst_info.file_name);
 						continue;
 					}
 				}

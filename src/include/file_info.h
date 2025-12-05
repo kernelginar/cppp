@@ -1,7 +1,9 @@
 #ifndef FILE_INFO
 #define FILE_INFO
 
+#include <libgen.h>
 #include <limits.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -13,6 +15,7 @@ typedef struct {
 		off_t last_part_size;
 		unsigned int num_parts;
 		mode_t permissions;
+		mode_t dir_permissions;
 		int status;
 		mode_t st_mode;
 		ino_t st_ino;

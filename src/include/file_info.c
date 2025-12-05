@@ -3,6 +3,7 @@
 file_info get_file_info(const char *file_name, off_t num_parts) {
 	file_info file_info;
 	struct stat st;
+	struct stat st_dir;
 	file_info.status = stat(file_name, &st);
 	off_t file_size = st.st_size;
 	off_t part_size = file_size / num_parts;
@@ -11,6 +12,12 @@ file_info get_file_info(const char *file_name, off_t num_parts) {
 	mode_t st_mode = st.st_mode;
 	ino_t st_ino = st.st_ino;
 	dev_t st_dev = st.st_dev;
+
+	char dir_name[PATH_MAX];
+	snprintf(dir_name, sizeof(dir_name), "%s", file_name);
+	if (stat(dirname(dir_name), &st_dir) != -1) {
+		file_info.dir_permissions = st_dir.st_mode & (S_IRWXU | S_IRWXG | S_IRWXO);
+	}
 
 	realpath(file_name, file_info.file_name);
 	file_info.file_size = file_size;
