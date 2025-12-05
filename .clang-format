@@ -1,0 +1,28 @@
+BasedOnStyle: LLVM
+
+# Boşluk yerine kesinlikle Tab (\t) kullan
+UseTab: Always
+
+# Bir Tab kaç karakter genişliğinde olsun? (Genelde 4)
+TabWidth: 4
+
+# Her girinti seviyesi kaç karakterlik genişlik kaplasın?
+IndentWidth: 4
+
+# Süslü parantezleri ({) fonksiyon/class adının yanına yapıştır
+BreakBeforeBraces: Attach
+
+AccessModifierOffset: -4
+IndentAccessModifiers: true
+
+# Switch-Case bloklarında case'leri girintile
+IndentCaseLabels: true
+
+# Pointer hizalaması (Type* variable şeklinde sola yapışık)
+PointerAlignment: Right
+
+# Kısa fonksiyonları tek satıra sıkıştırma (Okunabilirlik için)
+AllowShortFunctionsOnASingleLine: Empty
+
+# Satır uzunluğu limiti (0 yaparsanız satırları bölmez, isterseniz 100-120 yapabilirsiniz)
+ColumnLimit: 0
